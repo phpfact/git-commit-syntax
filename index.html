@@ -2,158 +2,394 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Git Commit Generator</title>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: "Segoe UI", sans-serif;
-      background: #f7f9fc;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    h1 {
-      color: #333;
-      margin-bottom: 20px;
+    .header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .header h1 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      color: #000000;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      tracking: tight;
+    }
+
+    .header p {
+      font-size: 1.125rem;
+      color: #666666;
+      font-weight: 300;
+      letter-spacing: 0.3px;
     }
 
     .container {
-      background: white;
-      padding: 25px 30px;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+      padding: 50px;
       border-radius: 12px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-      width: 400px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+      animation: slideUp 0.8s ease-out;
+    }
+
+    .form-group {
+      margin-bottom: 30px;
+      animation: fadeIn 0.6s ease-out;
     }
 
     label {
       font-weight: 600;
-      margin-top: 10px;
       display: block;
+      margin-bottom: 10px;
+      color: #1a1a1a;
+      font-size: 0.95rem;
+      letter-spacing: 0.2px;
+      text-transform: uppercase;
+      font-size: 0.85rem;
     }
 
     select, input, textarea {
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 14px;
-      box-sizing: border-box;
+      padding: 12px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #e5e5e5;
+      font-size: 0.95rem;
+      font-family: inherit;
+      background: #ffffff;
+      color: #1a1a1a;
+      transition: all 0.3s ease;
+    }
+
+    select:focus, input:focus, textarea:focus {
+      outline: none;
+      border-color: #000000;
+      box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+      background: #fafafa;
+    }
+
+    select:hover, input:hover, textarea:hover {
+      border-color: #cccccc;
     }
 
     textarea {
       resize: none;
-      height: 60px;
+      height: 80px;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      line-height: 1.5;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%23000' d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 40px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 30px;
     }
 
     button {
-      margin-top: 15px;
-      width: 100%;
-      background: #007bff;
-      color: white;
+      flex: 1;
+      padding: 14px 20px;
       border: none;
-      padding: 10px;
-      border-radius: 6px;
+      border-radius: 8px;
       cursor: pointer;
-      font-size: 15px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      border: 1.5px solid transparent;
     }
 
-    button:hover {
-      background: #0056b3;
+    .generate-btn {
+      background: #000000;
+      color: #ffffff;
+      width: 100%;
     }
 
-    .output {
-      margin-top: 15px;
-      background: #f1f1f1;
-      padding: 10px;
-      border-radius: 6px;
-      font-family: monospace;
-      font-size: 14px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
+    .generate-btn:hover {
+      background: #1a1a1a;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .generate-btn:active {
+      transform: translateY(0);
     }
 
     .copy-btn {
-      background: #28a745;
-      margin-top: 10px;
+      background: #ffffff;
+      color: #000000;
+      border: 1.5px solid #000000;
+      display: none;
     }
 
     .copy-btn:hover {
-      background: #1e7e34;
+      background: #000000;
+      color: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0);
+    }
+
+    .copy-btn.show {
+      display: block;
+    }
+
+    .output-section {
+      margin-top: 30px;
+      display: none;
+      animation: slideDown 0.4s ease-out;
+    }
+
+    .output-section.show {
+      display: block;
+    }
+
+    .output-label {
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2px;
+    }
+
+    .output {
+      background: #f9f9f9;
+      border: 1.5px solid #e5e5e5;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      color: #1a1a1a;
+      line-height: 1.6;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
+    }
+
+    /* Toast styles */
+    #toast {
+      visibility: hidden;
+      min-width: 300px;
+      background-color: #000000;
+      color: #ffffff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 14px 20px;
+      position: fixed;
+      z-index: 9999;
+      left: 50%;
+      bottom: 30px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.4s ease, bottom 0.4s ease;
+      transform: translateX(-50%);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.3px;
+    }
+
+    #toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        max-height: 0;
+      }
+      to {
+        opacity: 1;
+        max-height: 500px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .header h1 {
+        font-size: 2.5rem;
+        margin-bottom: 8px;
+      }
+
+      .container {
+        padding: 30px 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Git Commit Generator</h1>
-
-  <div class="container">
-    <label>1️⃣ Commit Type</label>
-    <select id="type">
-      <option value="feat">feat - ✨ New feature</option>
-      <option value="fix">fix - 🐛 Bug fix</option>
-      <option value="docs">docs - 📝 Documentation change</option>
-      <option value="style">style - 💅 Code style change</option>
-      <option value="refactor">refactor - ♻️ Code restructure</option>
-      <option value="perf">perf - ⚡ Performance improvement</option>
-      <option value="test">test - ✅ Add/modify test cases</option>
-      <option value="chore">chore - 🔧 Build/config changes</option>
-      <option value="ci">ci - 🤖 CI/CD configuration changes</option>
-      <option value="build">build - 🏗️ Build system or dependency updates</option>
-      <option value="revert">revert - ⏪ Revert a previous commit</option>
-      <option value="security">security - 🔒 Security fixes</option>
-      <option value="deps">deps - 📦 Update project dependencies</option>
-      <option value="merge">merge - 🔀 Merge branch or resolve conflicts</option>
-      <option value="hotfix">hotfix - 🚑 Critical production bug fix</option>
-    </select>
-
-    <label>2️⃣ Scope (optional)</label>
-    <input type="text" id="scope" placeholder="e.g. footer, auth, api, dashboard">
-
-    <label>3️⃣ Short Message</label>
-    <textarea id="message" placeholder="e.g. add Layers version display in app footer"></textarea>
-
-    <label>4️⃣ Version (optional)</label>
-    <input type="text" id="version" placeholder="e.g. 1.3.0">
-
-    <button onclick="generateCommand()">Generate Command</button>
-
-    <div class="output" id="output" style="display:none;"></div>
-    <button class="copy-btn" id="copyBtn" style="display:none;" onclick="copyCommand()">Copy Command</button>
+  <div class="header">
+    <h1>Git Commit</h1>
+    <p>Professional commit message generator</p>
   </div>
 
+  <div class="container">
+    <div class="form-group">
+      <label>1️⃣ Commit Type</label>
+      <select id="type">
+        <option value="">--Select Commit Type--</option>
+        <option value="feat">feat - ✨ New feature</option>
+        <option value="fix">fix - 🐛 Bug fix</option>
+        <option value="docs">docs - 📝 Documentation change</option>
+        <option value="style">style - 💅 Code style change</option>
+        <option value="refactor">refactor - ♻️ Code restructure</option>
+        <option value="perf">perf - ⚡ Performance improvement</option>
+        <option value="test">test - ✅ Add/modify test cases</option>
+        <option value="chore">chore - 🔧 Build/config changes</option>
+        <option value="ci">ci - 🤖 CI/CD configuration changes</option>
+        <option value="build">build - 🏗️ Build system or dependency updates</option>
+        <option value="revert">revert - ⏪ Revert a previous commit</option>
+        <option value="security">security - 🔒 Security fixes</option>
+        <option value="deps">deps - 📦 Update project dependencies</option>
+        <option value="merge">merge - 🔀 Merge branch or resolve conflicts</option>
+        <option value="hotfix">hotfix - 🚑 Critical production bug fix</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>2️⃣ Scope</label>
+      <input type="text" id="scope" placeholder="e.g. footer, auth, api, dashboard">
+    </div>
+
+    <div class="form-group">
+      <label>3️⃣ Short Message</label>
+      <textarea id="message" placeholder="e.g. add Layers version display in app footer"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>4️⃣ Version</label>
+      <input type="text" id="version" placeholder="e.g. 1.3.0">
+    </div>
+
+    <div class="button-group">
+      <button class="generate-btn" onclick="generateCommand()">Generate Commit</button>
+    </div>
+
+    <div class="output-section" id="outputSection">
+      <div class="output-label">Generated Command</div>
+      <div class="output" id="output"></div>
+      <button class="copy-btn" id="copyBtn" onclick="copyCommand()">Copy Command</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
   <script>
+    // Load data from localStorage on page load
+    window.onload = function() {
+      const fields = ['type','scope','message','version'];
+      fields.forEach(f => {
+        const val = localStorage.getItem(f);
+        if(val) document.getElementById(f).value = val;
+      });
+    };
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add("show");
+      setTimeout(() => { toast.classList.remove("show"); }, 3000);
+    }
+
     function generateCommand() {
-      const type = document.getElementById('type').value;
+      const type = document.getElementById('type').value.trim();
       const scope = document.getElementById('scope').value.trim();
       const message = document.getElementById('message').value.trim();
       const version = document.getElementById('version').value.trim();
 
-      if (!message) {
-        alert("Please enter a short message!");
+      // Validate all fields
+      if (!type || !scope || !message || !version) {
+        showToast("❌ Please fill all required fields!");
         return;
       }
 
-      const scopePart = scope ? `(${scope})` : '';
-      let command = `git commit -m "${type}${scopePart}: ${message}"`;
+      // Save to localStorage
+      localStorage.setItem('type', type);
+      localStorage.setItem('scope', scope);
+      localStorage.setItem('message', message);
+      localStorage.setItem('version', version);
 
-      if (version) {
-        command += ` \\\n-m "Version: ${version}"`;
-      }
+      const scopePart = `(${scope})`;
+      let command = `git commit -m "${type}${scopePart}: ${message}" \\\n-m "Version: ${version}"`;
 
-      document.getElementById('output').style.display = 'block';
       document.getElementById('output').innerText = command;
-      document.getElementById('copyBtn').style.display = 'block';
+      document.getElementById('outputSection').classList.add('show');
+      document.getElementById('copyBtn').classList.add('show');
+      showToast("✅ Commit command generated!");
     }
 
     function copyCommand() {
       const output = document.getElementById('output').innerText;
       navigator.clipboard.writeText(output).then(() => {
-        alert("✅ Command copied to clipboard!");
+        showToast("✅ Command copied to clipboard!");
       });
     }
+
+    // Allow Enter key to generate command
+    document.getElementById('version').addEventListener('keypress', function(e) {
+      if(e.key === 'Enter') generateCommand();
+    });
   </script>
 </body>
 </html>
