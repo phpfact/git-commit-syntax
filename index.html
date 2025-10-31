@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Git Commit Generator</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f7f9fc;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      background: white;
+      padding: 25px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 10px;
+      display: block;
+    }
+
+    select, input, textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      resize: none;
+      height: 60px;
+    }
+
+    button {
+      margin-top: 15px;
+      width: 100%;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .output {
+      margin-top: 15px;
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 6px;
+      font-family: monospace;
+      font-size: 14px;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+
+    .copy-btn {
+      background: #28a745;
+      margin-top: 10px;
+    }
+
+    .copy-btn:hover {
+      background: #1e7e34;
+    }
+  </style>
+</head>
+<body>
+  <h1>Git Commit Generator</h1>
+
+  <div class="container">
+    <label>1️⃣ Commit Type</label>
+    <select id="type">
+      <option value="feat">feat - ✨ New feature</option>
+      <option value="fix">fix - 🐛 Bug fix</option>
+      <option value="docs">docs - 📝 Documentation change</option>
+      <option value="style">style - 💅 Code style change</option>
+      <option value="refactor">refactor - ♻️ Code restructure</option>
+      <option value="perf">perf - ⚡ Performance improvement</option>
+      <option value="test">test - ✅ Add/modify test cases</option>
+      <option value="chore">chore - 🔧 Build/config changes</option>
+      <option value="ci">ci - 🤖 CI/CD configuration changes</option>
+      <option value="build">build - 🏗️ Build system or dependency updates</option>
+      <option value="revert">revert - ⏪ Revert a previous commit</option>
+      <option value="security">security - 🔒 Security fixes</option>
+      <option value="deps">deps - 📦 Update project dependencies</option>
+      <option value="merge">merge - 🔀 Merge branch or resolve conflicts</option>
+      <option value="hotfix">hotfix - 🚑 Critical production bug fix</option>
+    </select>
+
+    <label>2️⃣ Scope (optional)</label>
+    <input type="text" id="scope" placeholder="e.g. footer, auth, api, dashboard">
+
+    <label>3️⃣ Short Message</label>
+    <textarea id="message" placeholder="e.g. add Layers version display in app footer"></textarea>
+
+    <label>4️⃣ Version (optional)</label>
+    <input type="text" id="version" placeholder="e.g. 1.3.0">
+
+    <button onclick="generateCommand()">Generate Command</button>
+
+    <div class="output" id="output" style="display:none;"></div>
+    <button class="copy-btn" id="copyBtn" style="display:none;" onclick="copyCommand()">Copy Command</button>
+  </div>
+
+  <script>
+    function generateCommand() {
+      const type = document.getElementById('type').value;
+      const scope = document.getElementById('scope').value.trim();
+      const message = document.getElementById('message').value.trim();
+      const version = document.getElementById('version').value.trim();
+
+      if (!message) {
+        alert("Please enter a short message!");
+        return;
+      }
+
+      const scopePart = scope ? `(${scope})` : '';
+      let command = `git commit -m "${type}${scopePart}: ${message}"`;
+
+      if (version) {
+        command += ` \\\n-m "Version: ${version}"`;
+      }
+
+      document.getElementById('output').style.display = 'block';
+      document.getElementById('output').innerText = command;
+      document.getElementById('copyBtn').style.display = 'block';
+    }
+
+    function copyCommand() {
+      const output = document.getElementById('output').innerText;
+      navigator.clipboard.writeText(output).then(() => {
+        alert("✅ Command copied to clipboard!");
+      });
+    }
+  </script>
+</body>
+</html>
