@@ -288,22 +288,33 @@
     <div class="form-group">
       <label>Commit Type</label>
       <select id="type">
-        <option value="">--Select Commit Type--</option>
-        <option value="feat">feat - ✨ New feature</option>
-        <option value="fix">fix - 🐛 Bug fix</option>
-        <option value="docs">docs - 📝 Documentation change</option>
-        <option value="style">style - 💅 Code style change</option>
-        <option value="refactor">refactor - ♻️ Code restructure</option>
-        <option value="perf">perf - ⚡ Performance improvement</option>
-        <option value="test">test - ✅ Add/modify test cases</option>
-        <option value="chore">chore - 🔧 Build/config changes</option>
-        <option value="ci">ci - 🤖 CI/CD configuration changes</option>
-        <option value="build">build - 🏗️ Build system or dependency updates</option>
-        <option value="revert">revert - ⏪ Revert a previous commit</option>
-        <option value="security">security - 🔒 Security fixes</option>
-        <option value="deps">deps - 📦 Update project dependencies</option>
-        <option value="merge">merge - 🔀 Merge branch or resolve conflicts</option>
-        <option value="hotfix">hotfix - 🚑 Critical production bug fix</option>
+            <!-- 🔥 MAJOR UPDATE -->
+            <optgroup label="🚀 MAJOR Update (Breaking Changes)">
+                <option value="breaking">breaking - 💥 Major Update (Breaking Change)</option>
+            </optgroup>
+            
+            <!-- ✨ MINOR UPDATE -->
+            <optgroup label="🌟 MINOR Update (New Features)">
+                <option value="feat">feat - ✨ New Feature</option>
+            </optgroup>
+            
+            <!-- 🛠️ PATCH UPDATE -->
+            <optgroup label="🔧 PATCH Update (Fixes & Maintenance)">
+                <option value="fix">fix - 🐛 Bug Fix</option>
+                <option value="hotfix">hotfix - 🚑 Critical Bug Fix</option>
+                <option value="docs">docs - 📝 Documentation Update</option>
+                <option value="style">style - 💅 Code Style Change</option>
+                <option value="refactor">refactor - ♻️ Code Restructure (No behavior change)</option>
+                <option value="perf">perf - ⚡ Performance Improvement</option>
+                <option value="test">test - ✅ Add/Update Tests</option>
+                <option value="chore">chore - 🔧 Build/Config Updates</option>
+                <option value="ci">ci - 🤖 CI/CD Configuration</option>
+                <option value="build">build - 🏗️ Build System / Dependency Updates</option>
+                <option value="revert">revert - ⏪ Revert Commit</option>
+                <option value="security">security - 🔒 Security Fix</option>
+                <option value="deps">deps - 📦 Dependency Updates</option>
+                <option value="merge">merge - 🔀 Merge Branch / Conflict Resolve</option>
+            </optgroup>
       </select>
     </div>
 
