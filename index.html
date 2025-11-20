@@ -66,10 +66,9 @@
       display: block;
       margin-bottom: 10px;
       color: #1a1a1a;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       letter-spacing: 0.2px;
       text-transform: uppercase;
-      font-size: 0.85rem;
     }
 
     select, input, textarea {
@@ -89,10 +88,6 @@
       border-color: #000000;
       box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
       background: #fafafa;
-    }
-
-    select:hover, input:hover, textarea:hover {
-      border-color: #cccccc;
     }
 
     textarea {
@@ -128,7 +123,6 @@
       text-transform: uppercase;
       letter-spacing: 0.5px;
       transition: all 0.3s ease;
-      border: 1.5px solid transparent;
     }
 
     .generate-btn {
@@ -141,32 +135,6 @@
       background: #1a1a1a;
       transform: translateY(-2px);
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .generate-btn:active {
-      transform: translateY(0);
-    }
-
-    .copy-btn {
-      background: #ffffff;
-      color: #000000;
-      border: 1.5px solid #000000;
-      display: none;
-    }
-
-    .copy-btn:hover {
-      background: #000000;
-      color: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    }
-
-    .copy-btn:active {
-      transform: translateY(0);
-    }
-
-    .copy-btn.show {
-      display: block;
     }
 
     .output-section {
@@ -185,7 +153,6 @@
       margin-bottom: 10px;
       font-size: 0.85rem;
       text-transform: uppercase;
-      letter-spacing: 0.2px;
     }
 
     .output {
@@ -199,11 +166,9 @@
       word-wrap: break-word;
       color: #1a1a1a;
       line-height: 1.6;
-      margin-bottom: 12px;
-      background: linear-gradient(135deg, #f9f9f9 0%, #f5f5f5 100%);
     }
 
-    /* Toast styles */
+    /* Toast styles - TOP POSITION */
     #toast {
       visibility: hidden;
       min-width: 300px;
@@ -215,117 +180,86 @@
       position: fixed;
       z-index: 9999;
       left: 50%;
-      bottom: 30px;
+      top: 20px;
       font-size: 0.95rem;
       font-weight: 500;
       opacity: 0;
-      transition: opacity 0.4s ease, bottom 0.4s ease;
       transform: translateX(-50%);
+      transition: opacity 0.4s ease, top 0.4s ease;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-      letter-spacing: 0.3px;
     }
 
     #toast.show {
       visibility: visible;
       opacity: 1;
-      bottom: 50px;
+      top: 40px;
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes slideDown {
-      from {
-        opacity: 0;
-        max-height: 0;
-      }
-      to {
-        opacity: 1;
-        max-height: 500px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .header h1 {
-        font-size: 2.5rem;
-        margin-bottom: 8px;
-      }
-
-      .container {
-        padding: 30px 20px;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
+      from { opacity: 0; max-height: 0; }
+      to { opacity: 1; max-height: 500px; }
     }
   </style>
 </head>
 <body>
+
   <div class="header">
     <h1>Git Commit</h1>
     <p>Professional commit message generator</p>
   </div>
 
   <div class="container">
+
     <div class="form-group">
       <label>Commit Type</label>
       <select id="type">
-            <!-- 🔥 MAJOR UPDATE -->
-            <optgroup label="🚀 MAJOR Update (Breaking Changes)">
-                <option value="breaking">breaking - 💥 Major Update (Breaking Change)</option>
-            </optgroup>
-            
-            <!-- ✨ MINOR UPDATE -->
-            <optgroup label="🌟 MINOR Update (New Features)">
-                <option value="feat">feat - ✨ New Feature</option>
-            </optgroup>
-            
-            <!-- 🛠️ PATCH UPDATE -->
-            <optgroup label="🔧 PATCH Update (Fixes & Maintenance)">
-                <option value="fix">fix - 🐛 Bug Fix</option>
-                <option value="hotfix">hotfix - 🚑 Critical Bug Fix</option>
-                <option value="docs">docs - 📝 Documentation Update</option>
-                <option value="style">style - 💅 Code Style Change</option>
-                <option value="refactor">refactor - ♻️ Code Restructure (No behavior change)</option>
-                <option value="perf">perf - ⚡ Performance Improvement</option>
-                <option value="test">test - ✅ Add/Update Tests</option>
-                <option value="chore">chore - 🔧 Build/Config Updates</option>
-                <option value="ci">ci - 🤖 CI/CD Configuration</option>
-                <option value="build">build - 🏗️ Build System / Dependency Updates</option>
-                <option value="revert">revert - ⏪ Revert Commit</option>
-                <option value="security">security - 🔒 Security Fix</option>
-                <option value="deps">deps - 📦 Dependency Updates</option>
-                <option value="merge">merge - 🔀 Merge Branch / Conflict Resolve</option>
-            </optgroup>
+
+        <optgroup label="🚀 MAJOR Update (Breaking Changes)">
+          <option value="breaking">breaking - 💥 Major Update (Breaking Change)</option>
+        </optgroup>
+
+        <optgroup label="🌟 MINOR Update (New Features)">
+          <option value="feat">feat - ✨ New Feature</option>
+        </optgroup>
+
+        <optgroup label="🔧 PATCH Update (Fixes & Maintenance)">
+          <option value="fix">fix - 🐛 Bug Fix</option>
+          <option value="hotfix">hotfix - 🚑 Critical Bug Fix</option>
+          <option value="docs">docs - 📝 Documentation Update</option>
+          <option value="style">style - 💅 Code Style Change</option>
+          <option value="refactor">refactor - ♻️ Code Restructure</option>
+          <option value="perf">perf - ⚡ Performance Improvement</option>
+          <option value="test">test - ✅ Add/Update Tests</option>
+          <option value="chore">chore - 🔧 Build/Config Updates</option>
+          <option value="ci">ci - 🤖 CI/CD Configuration</option>
+          <option value="build">build - 🏗️ Build System</option>
+          <option value="revert">revert - ⏪ Revert Commit</option>
+          <option value="security">security - 🔒 Security Fix</option>
+          <option value="deps">deps - 📦 Dependency Updates</option>
+          <option value="merge">merge - 🔀 Merge Conflict Resolve</option>
+        </optgroup>
+
       </select>
     </div>
 
     <div class="form-group">
       <label>Scope</label>
-      <input type="text" id="scope" placeholder="e.g. login, auth, api, profile, dashboard">
+      <input type="text" id="scope" placeholder="e.g. login, auth, api, dashboard">
     </div>
 
     <div class="form-group">
       <label>Short Message</label>
-      <textarea id="message" placeholder="e.g. add phone number field to authentication page"></textarea>
+      <textarea id="message" placeholder="e.g. add phone number field"></textarea>
     </div>
 
     <div class="form-group">
@@ -340,14 +274,13 @@
     <div class="output-section" id="outputSection">
       <div class="output-label">Generated Command</div>
       <div class="output" id="output"></div>
-      <button class="copy-btn" id="copyBtn" onclick="copyCommand()">Copy Command</button>
     </div>
+
   </div>
 
   <div id="toast"></div>
 
   <script>
-    // Load data from localStorage on page load
     window.onload = function() {
       const fields = ['type','scope','message','version'];
       fields.forEach(f => {
@@ -360,7 +293,7 @@
       const toast = document.getElementById('toast');
       toast.innerText = message;
       toast.classList.add("show");
-      setTimeout(() => { toast.classList.remove("show"); }, 3000);
+      setTimeout(() => { toast.classList.remove("show"); }, 2500);
     }
 
     function generateCommand() {
@@ -369,13 +302,11 @@
       const message = document.getElementById('message').value.trim();
       const version = document.getElementById('version').value.trim();
 
-      // Validate all fields
       if (!type || !scope || !message || !version) {
         showToast("❌ Please fill all required fields!");
         return;
       }
 
-      // Save to localStorage
       localStorage.setItem('type', type);
       localStorage.setItem('scope', scope);
       localStorage.setItem('message', message);
@@ -386,21 +317,16 @@
 
       document.getElementById('output').innerText = command;
       document.getElementById('outputSection').classList.add('show');
-      document.getElementById('copyBtn').classList.add('show');
-      showToast("✅ Commit command generated!");
-    }
 
-    function copyCommand() {
-      const output = document.getElementById('output').innerText;
-      navigator.clipboard.writeText(output).then(() => {
-        showToast("✅ Command copied to clipboard!");
+      navigator.clipboard.writeText(command).then(() => {
+        showToast("📋 Commit copied to clipboard!");
       });
     }
 
-    // Allow Enter key to generate command
     document.getElementById('version').addEventListener('keypress', function(e) {
-      if(e.key === 'Enter') generateCommand();
+      if (e.key === 'Enter') generateCommand();
     });
   </script>
+
 </body>
 </html>
